@@ -313,7 +313,7 @@ function StatCard({
   return (
     <Card className={className || "glass"}>
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <CardTitle className="text-sm font-medium bg-yellow-100 dark:bg-yellow-900/30 p-2 rounded">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-3xl font-bold">{value}</p>
