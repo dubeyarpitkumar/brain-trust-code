@@ -105,16 +105,18 @@ export function TaskCard({
     {/* Mobile Modal */}
     {isMobile && (
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-[90vw] max-h-[85vh] overflow-x-hidden overflow-y-auto p-6">
-          <DialogHeader className="space-y-3 pb-4">
-            <DialogTitle className={`text-xl font-semibold pr-8 leading-tight ${isCompleted ? "line-through text-muted-foreground" : ""}`}>
-              {task.title}
-            </DialogTitle>
-            <DialogDescription className="sr-only">
-              Task details for {task.title}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-6 px-1">
+        <DialogContent className="max-w-[90vw] max-h-[85vh] flex flex-col overflow-hidden p-0">
+          <div className="flex-shrink-0 p-6 pb-4 border-b">
+            <DialogHeader className="space-y-3">
+              <DialogTitle className={`text-xl font-semibold pr-8 leading-tight ${isCompleted ? "line-through text-muted-foreground" : ""}`}>
+                {task.title}
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                Task details for {task.title}
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+          <div className="flex-1 overflow-y-auto overflow-x-hidden p-6 space-y-6">
             {task.notes && (
               <div className="space-y-2">
                 <p className="text-sm font-medium">{t("tasks.notes") || "Notes"}</p>
