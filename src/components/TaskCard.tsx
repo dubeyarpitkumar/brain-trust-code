@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Edit, Trash2, X } from "lucide-react";
 import { Tables } from "@/integrations/supabase/types";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -105,24 +105,27 @@ export function TaskCard({
     {/* Mobile Modal */}
     {isMobile && (
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-[90vw] max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className={`text-xl font-semibold pr-8 ${isCompleted ? "line-through text-muted-foreground" : ""}`}>
+        <DialogContent className="max-w-[90vw] max-h-[85vh] overflow-x-hidden overflow-y-auto p-6">
+          <DialogHeader className="space-y-3 pb-4">
+            <DialogTitle className={`text-xl font-semibold pr-8 leading-tight ${isCompleted ? "line-through text-muted-foreground" : ""}`}>
               {task.title}
             </DialogTitle>
+            <DialogDescription className="sr-only">
+              Task details for {task.title}
+            </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 mt-4">
+          <div className="space-y-6 px-1">
             {task.notes && (
-              <div>
-                <p className="text-sm font-medium mb-2">{t("tasks.notes") || "Notes"}</p>
-                <p className="text-muted-foreground whitespace-pre-wrap">
+              <div className="space-y-2">
+                <p className="text-sm font-medium">{t("tasks.notes") || "Notes"}</p>
+                <p className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
                   {task.notes}
                 </p>
               </div>
             )}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3 pt-2">
               <p className="text-sm font-medium">{t("tasks.status") || "Status"}:</p>
-              <span className={`text-sm ${isCompleted ? "text-green-600" : "text-orange-600"}`}>
+              <span className={`text-sm font-medium ${isCompleted ? "text-green-600" : "text-orange-600"}`}>
                 {isCompleted ? t("tasks.completed") : t("tasks.pending")}
               </span>
             </div>
