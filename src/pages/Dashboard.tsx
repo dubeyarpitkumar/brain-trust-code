@@ -191,10 +191,10 @@ export default function Dashboard() {
         opacity: 1,
         y: 0
       }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard title={t("dashboard.totalTasks")} value={stats.total} />
+          <StatCard title={t("dashboard.totalTasks")} value={stats.total} className="gradient-purple text-white" />
           <StatCard title={t("dashboard.completedTasks")} value={stats.completed} className="gradient-success text-white" />
-          <StatCard title={t("dashboard.pendingTasks")} value={stats.pending} />
-          <StatCard title={t("dashboard.completionRate")} value={`${stats.rate}%`} className="gradient-primary text-white" />
+          <StatCard title={t("dashboard.pendingTasks")} value={stats.pending} className="gradient-orange text-white" />
+          <StatCard title={t("dashboard.completionRate")} value={`${stats.rate}%`} className="gradient-cyan text-white" />
         </motion.div>
 
         {/* Controls */}
@@ -260,12 +260,12 @@ function StatCard({
   value: number | string;
   className?: string;
 }) {
-  return <Card className={className || "glass"}>
-      <CardHeader className="pb-2 bg-slate-50">
-        <CardTitle className="font-medium bg-yellow-100 dark:bg-yellow-900/30 p-2 rounded text-slate-950 text-sm text-left">{title}</CardTitle>
+  return <Card className={`${className || "glass"} border-0 shadow-lg`}>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-sm font-medium opacity-90">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-3xl font-bold">{value}</p>
+        <p className="text-4xl font-bold tracking-tight">{value}</p>
       </CardContent>
     </Card>;
 }

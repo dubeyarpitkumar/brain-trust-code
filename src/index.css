@@ -49,6 +49,10 @@ All colors MUST be HSL.
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%), hsl(217 91% 60%));
     --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(158 64% 52%));
+    --gradient-orange: linear-gradient(135deg, hsl(24 95% 60%), hsl(35 100% 55%));
+    --gradient-purple: linear-gradient(135deg, hsl(280 83% 65%), hsl(262 83% 58%));
+    --gradient-pink: linear-gradient(135deg, hsl(330 80% 60%), hsl(340 90% 65%));
+    --gradient-cyan: linear-gradient(135deg, hsl(190 95% 50%), hsl(200 98% 55%));
   }
 
   .dark {
@@ -91,6 +95,10 @@ All colors MUST be HSL.
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%), hsl(217 91% 60%));
     --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(158 64% 52%));
+    --gradient-orange: linear-gradient(135deg, hsl(24 95% 60%), hsl(35 100% 55%));
+    --gradient-purple: linear-gradient(135deg, hsl(280 83% 65%), hsl(262 83% 58%));
+    --gradient-pink: linear-gradient(135deg, hsl(330 80% 60%), hsl(340 90% 65%));
+    --gradient-cyan: linear-gradient(135deg, hsl(190 95% 50%), hsl(200 98% 55%));
   }
 }
 
@@ -124,6 +132,22 @@ All colors MUST be HSL.
 
   .gradient-success {
     background: var(--gradient-success);
+  }
+
+  .gradient-orange {
+    background: var(--gradient-orange);
+  }
+
+  .gradient-purple {
+    background: var(--gradient-purple);
+  }
+
+  .gradient-pink {
+    background: var(--gradient-pink);
+  }
+
+  .gradient-cyan {
+    background: var(--gradient-cyan);
   }
 
   .text-gradient {
