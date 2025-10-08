@@ -66,8 +66,10 @@ export function TaskCard({
       duration: 0.2
     }}>
       <Card 
-        className={`glass border-2 hover:shadow-lg transition-shadow ${
-          isMobile ? "h-[170px] cursor-pointer active:scale-[0.98]" : ""
+        className={`glass border-2 transition-all ${
+          isMobile 
+            ? "h-[170px] cursor-pointer active:scale-[0.98] rounded-xl shadow-sm hover:shadow-md" 
+            : "hover:shadow-lg"
         }`}
         onClick={isMobile ? () => setModalOpen(true) : undefined}
       >
