@@ -14,10 +14,11 @@ import { TaskForm } from "@/components/TaskForm";
 import { EmptyState } from "@/components/EmptyState";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Plus, Search, LogOut, User, ArrowUpDown, Sparkles } from "lucide-react";
+import { Plus, Search, LogOut, User, ArrowUpDown, Sparkles, Filter } from "lucide-react";
 import { toast } from "sonner";
 import { Tables } from "@/integrations/supabase/types";
 import { AITaskGenerator } from "@/components/AITaskGenerator";
+import { useIsMobile } from "@/hooks/use-mobile";
 type Task = Tables<"tasks">;
 export default function Dashboard() {
   const {
@@ -26,6 +27,7 @@ export default function Dashboard() {
   const {
     user
   } = useAuth();
+  const isMobile = useIsMobile();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -34,6 +36,7 @@ export default function Dashboard() {
   const [formOpen, setFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [aiGeneratorOpen, setAiGeneratorOpen] = useState(false);
+  const [taskIdea, setTaskIdea] = useState("");
   useEffect(() => {
     if (user) {
       fetchTasks();
@@ -198,35 +201,114 @@ export default function Dashboard() {
         </motion.div>
 
         {/* Controls */}
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder={t("tasks.search")} value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10" />
+        {isMobile ? (
+          <div className="space-y-4">
+            {/* Search Row with Filter/Sort Icons */}
+            <div className="flex items-center gap-2 p-3 glass rounded-xl border shadow-sm">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input 
+                  placeholder="Search tasks…" 
+                  value={searchQuery} 
+                  onChange={e => setSearchQuery(e.target.value)} 
+                  className="pl-10 border-0 bg-transparent focus-visible:ring-0" 
+                />
+              </div>
+              
+              {/* Filter Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+                    <Filter className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur-sm">
+                  <DropdownMenuItem onClick={() => setStatusFilter("all")}>
+                    {t("tasks.all")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setStatusFilter("pending")}>
+                    {t("tasks.pending")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setStatusFilter("completed")}>
+                    {t("tasks.completed")}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Sort Button */}
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => setSortOrder(sortOrder === "latest" ? "oldest" : "latest")}
+                className="h-8 w-8 shrink-0"
+              >
+                <ArrowUpDown className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Task Creation Area */}
+            <div className="p-4 glass rounded-xl border shadow-sm space-y-3">
+              <Input 
+                placeholder="Describe your task idea…" 
+                value={taskIdea}
+                onChange={e => setTaskIdea(e.target.value)}
+                className="border-0 bg-background/50 focus-visible:ring-1"
+              />
+              <div className="flex gap-3">
+                <Button 
+                  onClick={() => {
+                    setFormOpen(true);
+                    setTaskIdea("");
+                  }} 
+                  className="flex-1 h-11 rounded-xl gradient-primary text-white font-medium"
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Task
+                </Button>
+                <Button 
+                  onClick={() => {
+                    setAiGeneratorOpen(true);
+                    setTaskIdea("");
+                  }} 
+                  className="flex-1 h-11 rounded-xl gradient-purple text-white font-medium"
+                >
+                  <Sparkles className="mr-2 h-4 w-4" />
+                  AI Task
+                </Button>
+              </div>
+            </div>
           </div>
+        ) : (
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input placeholder={t("tasks.search")} value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10" />
+            </div>
 
-          <Tabs value={statusFilter} onValueChange={(v: any) => setStatusFilter(v)}>
-            <TabsList>
-              <TabsTrigger value="all">{t("tasks.all")}</TabsTrigger>
-              <TabsTrigger value="pending">{t("tasks.pending")}</TabsTrigger>
-              <TabsTrigger value="completed">{t("tasks.completed")}</TabsTrigger>
-            </TabsList>
-          </Tabs>
+            <Tabs value={statusFilter} onValueChange={(v: any) => setStatusFilter(v)}>
+              <TabsList>
+                <TabsTrigger value="all">{t("tasks.all")}</TabsTrigger>
+                <TabsTrigger value="pending">{t("tasks.pending")}</TabsTrigger>
+                <TabsTrigger value="completed">{t("tasks.completed")}</TabsTrigger>
+              </TabsList>
+            </Tabs>
 
-          <Button variant="outline" onClick={() => setSortOrder(sortOrder === "latest" ? "oldest" : "latest")}>
-            <ArrowUpDown className="mr-2 h-4 w-4" />
-            {sortOrder === "latest" ? t("tasks.sortLatest") : t("tasks.sortOldest")}
-          </Button>
+            <Button variant="outline" onClick={() => setSortOrder(sortOrder === "latest" ? "oldest" : "latest")}>
+              <ArrowUpDown className="mr-2 h-4 w-4" />
+              {sortOrder === "latest" ? t("tasks.sortLatest") : t("tasks.sortOldest")}
+            </Button>
 
-          <Button onClick={() => setFormOpen(true)} className="gradient-primary bg-slate-50">
-            <Plus className="mr-2 h-4 w-4" />
-            {t("tasks.addTask")}
-          </Button>
+            <Button onClick={() => setFormOpen(true)} className="gradient-primary bg-slate-50">
+              <Plus className="mr-2 h-4 w-4" />
+              {t("tasks.addTask")}
+            </Button>
 
-          <Button onClick={() => setAiGeneratorOpen(true)} variant="outline" className="border-primary/50">
-            <Sparkles className="mr-2 h-4 w-4" />
-            {t("ai.title")}
-          </Button>
-        </div>
+            <Button onClick={() => setAiGeneratorOpen(true)} variant="outline" className="border-primary/50">
+              <Sparkles className="mr-2 h-4 w-4" />
+              {t("ai.title")}
+            </Button>
+          </div>
+        )}
 
         {/* Tasks List */}
         {loading ? <div className="space-y-4">
