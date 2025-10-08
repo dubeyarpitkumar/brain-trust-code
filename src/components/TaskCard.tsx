@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -28,6 +28,28 @@ export function TaskCard({
   const [expanded, setExpanded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const isCompleted = task.status === "completed";
+
+  // Lock page scrolling while the mobile modal is open
+  useEffect(() => {
+    if (!isMobile) return;
+    const root = document.documentElement;
+    const prevOverflow = root.style.overflow;
+    const prevOverscrollBehavior = root.style.overscrollBehavior;
+
+    if (modalOpen) {
+      root.style.overflow = "hidden"; // disable page scroll (both axes)
+      root.style.overscrollBehavior = "contain"; // prevent scroll chaining
+    } else {
+      root.style.overflow = prevOverflow || "";
+      root.style.overscrollBehavior = prevOverscrollBehavior || "";
+    }
+
+    return () => {
+      root.style.overflow = prevOverflow || "";
+      root.style.overscrollBehavior = prevOverscrollBehavior || "";
+    };
+  }, [modalOpen, isMobile]);
+
   const notesLines = task.notes?.split("\n").length || 0;
   const shouldTruncate = task.notes && notesLines > 3;
   return <>
