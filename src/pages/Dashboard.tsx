@@ -36,7 +36,6 @@ export default function Dashboard() {
   const [formOpen, setFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [aiGeneratorOpen, setAiGeneratorOpen] = useState(false);
-  const [taskIdea, setTaskIdea] = useState("");
   useEffect(() => {
     if (user) {
       fetchTasks();
@@ -247,29 +246,17 @@ export default function Dashboard() {
             </div>
 
             {/* Task Creation Area */}
-            <div className="p-4 glass rounded-xl border shadow-sm space-y-3">
-              <Input 
-                placeholder="Describe your task idea…" 
-                value={taskIdea}
-                onChange={e => setTaskIdea(e.target.value)}
-                className="border-0 bg-background/50 focus-visible:ring-1"
-              />
+            <div className="p-4 glass rounded-xl border shadow-sm">
               <div className="flex gap-3">
                 <Button 
-                  onClick={() => {
-                    setFormOpen(true);
-                    setTaskIdea("");
-                  }} 
+                  onClick={() => setFormOpen(true)} 
                   className="flex-1 h-11 rounded-xl gradient-primary text-white font-medium"
                 >
                   <Plus className="mr-2 h-4 w-4" />
                   Add Task
                 </Button>
                 <Button 
-                  onClick={() => {
-                    setAiGeneratorOpen(true);
-                    setTaskIdea("");
-                  }} 
+                  onClick={() => setAiGeneratorOpen(true)} 
                   className="flex-1 h-11 rounded-xl gradient-purple text-white font-medium"
                 >
                   <Sparkles className="mr-2 h-4 w-4" />
