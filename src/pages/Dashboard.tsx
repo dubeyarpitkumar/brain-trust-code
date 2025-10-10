@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { Tables } from "@/integrations/supabase/types";
 import { AITaskGenerator } from "@/components/AITaskGenerator";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { LiquidCompletionCard } from "@/components/LiquidCompletionCard";
 type Task = Tables<"tasks">;
 export default function Dashboard() {
   const {
@@ -196,7 +197,7 @@ export default function Dashboard() {
           <StatCard title={t("dashboard.totalTasks")} value={stats.total} className="gradient-purple text-white" />
           <StatCard title={t("dashboard.completedTasks")} value={stats.completed} className="gradient-success text-white" />
           <StatCard title={t("dashboard.pendingTasks")} value={stats.pending} className="gradient-orange text-white" />
-          <StatCard title={t("dashboard.completionRate")} value={`${stats.rate}%`} className="gradient-cyan text-white" />
+          <LiquidCompletionCard title={t("dashboard.completionRate")} percentage={stats.rate} />
         </motion.div>
 
         {/* Controls */}
