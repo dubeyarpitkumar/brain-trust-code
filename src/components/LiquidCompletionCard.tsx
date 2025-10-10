@@ -12,7 +12,7 @@ export function LiquidCompletionCard({ title, percentage }: LiquidCompletionCard
       <CardHeader className="pb-3 relative z-10">
         <CardTitle className="text-sm font-medium text-foreground">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="relative h-32">
+      <CardContent className="relative h-24 md:h-28">
         {/* Liquid container */}
         <div className="absolute inset-0 overflow-hidden rounded-b-lg">
           {/* Liquid wave */}
@@ -56,7 +56,7 @@ export function LiquidCompletionCard({ title, percentage }: LiquidCompletionCard
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="text-5xl font-bold tracking-tight text-foreground drop-shadow-lg"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground drop-shadow-lg"
           >
             {percentage}%
           </motion.p>
