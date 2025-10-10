@@ -185,7 +185,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="container mx-auto px-4 py-4 md:py-8 space-y-4 md:space-y-8">
         {/* Stats */}
         <motion.div initial={{
         opacity: 0,
@@ -193,7 +193,7 @@ export default function Dashboard() {
       }} animate={{
         opacity: 1,
         y: 0
-      }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      }} className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
           <StatCard title={t("dashboard.totalTasks")} value={stats.total} className="gradient-purple text-white" />
           <StatCard title={t("dashboard.completedTasks")} value={stats.completed} className="gradient-success text-white" />
           <StatCard title={t("dashboard.pendingTasks")} value={stats.pending} className="gradient-orange text-white" />
@@ -331,11 +331,11 @@ function StatCard({
   className?: string;
 }) {
   return <Card className={`${className || "glass"} border-0 shadow-lg`}>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium opacity-90">{title}</CardTitle>
+      <CardHeader className="pb-2 md:pb-3">
+        <CardTitle className="text-xs md:text-sm font-medium opacity-90">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-4xl font-bold tracking-tight">{value}</p>
+      <CardContent className="pt-0">
+        <p className="text-2xl md:text-4xl font-bold tracking-tight">{value}</p>
       </CardContent>
     </Card>;
 }

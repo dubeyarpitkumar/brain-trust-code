@@ -9,10 +9,10 @@ interface LiquidCompletionCardProps {
 export function LiquidCompletionCard({ title, percentage }: LiquidCompletionCardProps) {
   return (
     <Card className="glass border-0 shadow-lg overflow-hidden relative">
-      <CardHeader className="pb-3 relative z-10">
-        <CardTitle className="text-sm font-medium text-foreground">{title}</CardTitle>
+      <CardHeader className="pb-2 md:pb-3 relative z-10">
+        <CardTitle className="text-xs md:text-sm font-medium text-foreground">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="relative h-24 md:h-28">
+      <CardContent className="relative h-20 md:h-28 pt-0">
         {/* Liquid container */}
         <div className="absolute inset-0 overflow-hidden rounded-b-lg">
           {/* Liquid wave */}
